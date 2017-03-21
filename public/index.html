@@ -80,9 +80,13 @@ window.onload = function() {
   } else {
     url = window.location.search.match(/([A-Za-z0-9_-]+)/);
     if (url && url.length > 1) {
-      url = decodeURIComponent("/api/" + url[1] + "/swagger.json");
+      if (url[1]==='demo') {
+        url = null;
+      } else {
+        url = decodeURIComponent("/api/" + url[1] + "/swagger.json");
+      }
     } else {
-      url = null;
+      url = "/api/swagger.yaml";
     }
   }
 
