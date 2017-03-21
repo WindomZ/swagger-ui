@@ -29,6 +29,10 @@
     div.topbar {
       display: none;
     }
+
+    hgroup.main a {
+      display: none;
+    }
   </style>
 </head>
 
@@ -80,13 +84,16 @@ window.onload = function() {
   } else {
     url = window.location.search.match(/([A-Za-z0-9_-]+)/);
     if (url && url.length > 1) {
-      if (url[1]==='demo') {
+      url = url[1];
+      if (url === 'demo') {
         url = null;
+      } else if (url === 'yaml') {
+        url = "/api/swagger.yaml";
       } else {
-        url = decodeURIComponent("/api/" + url[1] + "/swagger.json");
+        url = decodeURIComponent("/api/" + url + "/swagger.json");
       }
     } else {
-      url = "/api/swagger.yaml";
+      url = "/api/swagger.json";
     }
   }
 
@@ -94,7 +101,7 @@ window.onload = function() {
   const ui = SwaggerUIBundle({
     url: url?url:"http://petstore.swagger.io/v2/swagger.json",
     dom_id: '#swagger-ui',
-    validatorUrl: url?null:"https://online.swagger.io/validator",
+    validatorUrl: "favicon-32x32.png",
     presets: [
       SwaggerUIBundle.presets.apis,
       // yay ES6 modules ↘
