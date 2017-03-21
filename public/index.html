@@ -25,6 +25,10 @@
       margin:0;
       background: #fafafa;
     }
+
+    div.topbar {
+      display: none;
+    }
   </style>
 </head>
 
@@ -70,9 +74,6 @@
 <script src="../dist/swagger-ui-standalone-preset.js"> </script>
 <script>
 window.onload = function() {
-  var div = document.getElementById("header");
-  div.parentNode.removeChild(div);
-
   var url = window.location.search.match(/url=([^&]+)/);
   if (url && url.length > 1) {
     url = decodeURIComponent(url[1]);
@@ -81,15 +82,15 @@ window.onload = function() {
     if (url && url.length > 1) {
       url = decodeURIComponent("/api/" + url[1] + "/swagger.json");
     } else {
-      url = "swagger.yaml";
+      url = null;
     }
   }
 
   // Build a system
   const ui = SwaggerUIBundle({
-    url: url,
+    url: url?url:"http://petstore.swagger.io/v2/swagger.json",
     dom_id: '#swagger-ui',
-    validatorUrl: null,
+    validatorUrl: url?null:"https://online.swagger.io/validator",
     presets: [
       SwaggerUIBundle.presets.apis,
       // yay ES6 modules ↘
